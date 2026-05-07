@@ -6,10 +6,9 @@ import { CartProvider } from "./context/CartContext";
 import CartButton from "./components/CartButton";
 import CartDrawer from "./components/CartDrawer";
 import { Toaster } from "./components/ui/sonner";
-import LoadingSpinnerMain from "./components/LoadingSpinnerMain";
+import LoadingSpinnerMain from "./components/loadingSpinnerMain";
 import Payment from "./pages/Payment";
 import OrderConfirmation from "./pages/OrderConfirmation";
-
 
 // ── Lazy loaded pages — each page only loads when user visits it ──
 const Landing = lazy(() => import("./pages/Landing"));
@@ -25,23 +24,22 @@ const FeedbackPage = lazy(() => import("./pages/FeedbackPage"));
 const ContactCare = lazy(() => import("./pages/ContactPage"));
 const Checkout = lazy(() => import("./pages/Checkout"));
 
-
 // ── Merchant pages (new) ──
-const MerchantLogin    = lazy(() => import('./pages/Merchant/MerchantLogin'))
-const Dashboard        = lazy(() => import('./pages/Merchant/MerchantDashboard'))
+const MerchantLogin = lazy(() => import("./pages/Merchant/MerchantLogin"));
+const Dashboard = lazy(() => import("./pages/Merchant/MerchantDashboard"));
 
-  // // ── Page loading spinner ──
-  // const PageLoader = () => (
-  //   <div className="min-h-screen bg-fav3 flex items-center justify-center">
-  //     <div className="flex flex-col items-center gap-4">
-  //       <div
-  //         className="w-10 h-10 border-2 border-fav1 border-t-transparent
-  //                       rounded-full animate-spin"
-  //       />
-  //       <p className="text-fav6 text-sm font-medium">Loading...</p>
-  //     </div>
-  //   </div>
-  // );
+// // ── Page loading spinner ──
+// const PageLoader = () => (
+//   <div className="min-h-screen bg-fav3 flex items-center justify-center">
+//     <div className="flex flex-col items-center gap-4">
+//       <div
+//         className="w-10 h-10 border-2 border-fav1 border-t-transparent
+//                       rounded-full animate-spin"
+//       />
+//       <p className="text-fav6 text-sm font-medium">Loading...</p>
+//     </div>
+//   </div>
+// );
 
 function App() {
   const [cartOpen, setCartOpen] = useState(false);
@@ -75,7 +73,10 @@ function App() {
                 <Route path="/merchant/login" element={<MerchantLogin />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/payment" element={<Payment />} />
-                <Route path="/order-confirmation" element={<OrderConfirmation />} />
+                <Route
+                  path="/order-confirmation"
+                  element={<OrderConfirmation />}
+                />
               </Routes>
             </Suspense>
           </BrowserRouter>
