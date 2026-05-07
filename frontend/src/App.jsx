@@ -6,7 +6,7 @@ import { CartProvider } from "./context/CartContext";
 import CartButton from "./components/CartButton";
 import CartDrawer from "./components/CartDrawer";
 import { Toaster } from "./components/ui/sonner";
-import LoadingSpinnerMain from "./components/loadingSpinnerMain";
+import LoadingSpinnerMain from "./components/LoadingSpinnerMain";
 import Payment from "./pages/Payment";
 import OrderConfirmation from "./pages/OrderConfirmation";
 

@@ -11,4 +11,4 @@ const LoadingSpinnerMain = () => (
   </div>
 );
 
-export default LoadingSpinnerMain
+export default LoadingSpinnerMain;
