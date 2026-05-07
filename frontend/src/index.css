@@ -5,6 +5,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+body {
+  overflow-x: hidden;
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -142,6 +146,11 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For IE and Edge */
+  }
+  *::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
   }
   body {
     @apply bg-background text-foreground;

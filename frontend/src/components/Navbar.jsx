@@ -67,7 +67,14 @@ const CupLogo = ({ size = 40 }) => (
       stroke="#2a0a0a"
       strokeWidth="0.5"
     />
-    <rect x="8.5" y="15.5" width="31" height="5" rx="2.2" fill="url(#tdc-rim)" />
+    <rect
+      x="8.5"
+      y="15.5"
+      width="31"
+      height="5"
+      rx="2.2"
+      fill="url(#tdc-rim)"
+    />
     <ellipse cx="24" cy="18" rx="13" ry="2.2" fill="rgba(0,0,0,0.2)" />
     {/* Handle */}
     <path
@@ -119,7 +126,7 @@ function Navbar() {
   return (
     <>
       <nav
-        className={`fixed left-0 right-0 z-50 transition-all duration-500
+        className={`fixed left-0 right-0 z-50 transition-all duration-500 overflow-x-hidden
                        top-0
                        ${
                          isLanding
