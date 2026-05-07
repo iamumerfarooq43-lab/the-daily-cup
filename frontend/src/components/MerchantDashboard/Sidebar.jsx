@@ -107,6 +107,7 @@ function Sidebar({ activeNav, setActiveNav, isDark, theme, isOpen, onClose }) {
             flexDirection: "column",
             gap: 4,
             overflowY: "auto",
+            minHeight: 0,
           }}
         >
           {NAV_ITEMS.map((item) => {
