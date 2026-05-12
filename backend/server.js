@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const dns = require('dns')
 const express = require('express')
 const cors = require('cors')
