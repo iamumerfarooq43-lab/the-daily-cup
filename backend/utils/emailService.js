@@ -61,7 +61,7 @@ const sendOrderConfirmation = async (order, user) => {
 
     // ✅ Initialize inside function so env var is always loaded
     // const resend = new Resend(process.env.RESEND_API_KEY)
-    const resend = new Resend('your_actual_resend_key_here')
+    const resend = new Resend('re_ZeYL8aTY_NDZVH8CdHVrqzWyqapHsedVV')
 
     const { data, error } = await resend.emails.send({
         from: 'The Daily Cup <onboarding@resend.dev>',
