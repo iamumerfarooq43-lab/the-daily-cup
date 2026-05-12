@@ -1,28 +1,26 @@
-const nodemailer = require('nodemailer')
+const { Resend } = require('resend')
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 const orderConfirmationTemplate = (order, user) => `
 <div style="font-family: 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto; background: #fff;">
 
-    <!-- Header -->
     <div style="background: #1c1917; padding: 32px; text-align: center;">
         <h1 style="color: #f59e0b; margin: 0; font-size: 24px;">☕ The Daily Cup</h1>
         <p style="color: #a8a29e; margin: 8px 0 0; font-size: 13px;">Artisan Coffee & Fresh Pastries</p>
     </div>
 
-    <!-- Body -->
     <div style="padding: 32px;">
         <h2 style="color: #1c1917; margin: 0 0 8px;">Order Confirmed! 🎉</h2>
         <p style="color: #57534e; font-size: 14px;">
             Hi ${user.fullName}, your order has been placed successfully.
         </p>
 
-        <!-- Order Number -->
         <div style="background: #fef3c7; border: 1px solid #fde68a; border-radius: 12px; padding: 16px; margin: 20px 0; text-align: center;">
             <p style="margin: 0; font-size: 12px; color: #92400e; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Order Number</p>
             <p style="margin: 8px 0 0; font-size: 24px; font-weight: 700; color: #78350f;">${order.orderNumber}</p>
         </div>
 
-        <!-- Order Items -->
         <h3 style="color: #1c1917; font-size: 14px; margin: 24px 0 12px;">Order Summary</h3>
         <table style="width: 100%; border-collapse: collapse;">
             ${order.items.map(item => `
@@ -34,14 +32,12 @@ const orderConfirmationTemplate = (order, user) => `
             `).join('')}
         </table>
 
-        <!-- Total -->
         <div style="border-top: 2px solid #1c1917; margin-top: 16px; padding-top: 16px;">
-            <p style="margin: 0; font-weight: 700; color: #1c1917; display: flex; justify-content: space-between;">
-                Total <span style="color: #b45309; font-size: 18px;">$${order.totalAmount.toFixed(2)}</span>
+            <p style="margin: 0; font-weight: 700; color: #1c1917;">
+                Total <span style="color: #b45309; font-size: 18px; float: right;">$${order.totalAmount.toFixed(2)}</span>
             </p>
         </div>
 
-        <!-- Delivery Info -->
         <div style="background: #f5f5f4; border-radius: 12px; padding: 16px; margin: 24px 0;">
             <p style="margin: 0 0 8px; font-size: 12px; font-weight: 600; color: #78716c; text-transform: uppercase;">Delivery Details</p>
             <p style="margin: 0; font-size: 13px; color: #1c1917;">📍 ${order.deliveryAddress}</p>
@@ -55,7 +51,6 @@ const orderConfirmationTemplate = (order, user) => `
         </p>
     </div>
 
-    <!-- Footer -->
     <div style="background: #f5f5f4; padding: 20px; text-align: center; border-top: 1px solid #e7e5e4;">
         <p style="margin: 0; font-size: 12px; color: #a8a29e;">© 2024 The Daily Cup · Lahore, Pakistan</p>
         <p style="margin: 6px 0 0; font-size: 12px; color: #a8a29e;">Made with ☕ and love</p>
@@ -64,21 +59,18 @@ const orderConfirmationTemplate = (order, user) => `
 `
 
 const sendOrderConfirmation = async (order, user) => {
-    // ✅ Create transporter inside the function so env vars are loaded
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS,
-        },
-    })
-
-    await transporter.sendMail({
-        from: `"The Daily Cup ☕" <${process.env.EMAIL_USER}>`,
+    const { data, error } = await resend.emails.send({
+        from: 'The Daily Cup <onboarding@resend.dev>',
         to: user.email,
         subject: `Order Confirmed! ${order.orderNumber} — The Daily Cup`,
         html: orderConfirmationTemplate(order, user),
     })
+
+    if (error) {
+        throw new Error(error.message)
+    }
+
+    return data
 }
 
 module.exports = { sendOrderConfirmation }
