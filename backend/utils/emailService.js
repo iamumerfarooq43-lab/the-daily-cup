@@ -57,6 +57,8 @@ const orderConfirmationTemplate = (order, user) => `
 `
 
 const sendOrderConfirmation = async (order, user) => {
+    console.log('🔑 RESEND_API_KEY:', process.env.RESEND_API_KEY ? 'loaded' : 'MISSING')
+
     // ✅ Initialize inside function so env var is always loaded
     const resend = new Resend(process.env.RESEND_API_KEY)
 
