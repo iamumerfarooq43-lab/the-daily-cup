@@ -60,7 +60,8 @@ const sendOrderConfirmation = async (order, user) => {
     console.log('🔑 RESEND_API_KEY:', process.env.RESEND_API_KEY ? 'loaded' : 'MISSING')
 
     // ✅ Initialize inside function so env var is always loaded
-    const resend = new Resend(process.env.RESEND_API_KEY)
+    // const resend = new Resend(process.env.RESEND_API_KEY)
+    const resend = new Resend('your_actual_resend_key_here')
 
     const { data, error } = await resend.emails.send({
         from: 'The Daily Cup <onboarding@resend.dev>',
