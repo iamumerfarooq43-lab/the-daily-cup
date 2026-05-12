@@ -1,7 +1,5 @@
 const { Resend } = require('resend')
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 const orderConfirmationTemplate = (order, user) => `
 <div style="font-family: 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto; background: #fff;">
 
@@ -59,6 +57,9 @@ const orderConfirmationTemplate = (order, user) => `
 `
 
 const sendOrderConfirmation = async (order, user) => {
+    // ✅ Initialize inside function so env var is always loaded
+    const resend = new Resend(process.env.RESEND_API_KEY)
+
     const { data, error } = await resend.emails.send({
         from: 'The Daily Cup <onboarding@resend.dev>',
         to: user.email,
@@ -66,10 +67,7 @@ const sendOrderConfirmation = async (order, user) => {
         html: orderConfirmationTemplate(order, user),
     })
 
-    if (error) {
-        throw new Error(error.message)
-    }
-
+    if (error) throw new Error(error.message)
     return data
 }
 
