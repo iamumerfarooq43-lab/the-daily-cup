@@ -1,6 +1,9 @@
 const Order = require('../models/Order')
+const { sendOrderConfirmation } = require('../utils/emailService')
+const User = require('../models/User')
 
 const createOrder = async (req, res) => {
+     console.log('🚀 createOrder called')
     const { items, deliveryAddress, specialInstructions, paymentMethod, dropoffLocation } = req.body
     const totalAmount = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
     const order = await Order.create({
@@ -13,6 +16,15 @@ const createOrder = async (req, res) => {
         dropoffLocation: dropoffLocation || {},
         estimatedDelivery: 30,
     })
+
+    try {
+        const user = await User.findById(req.user._id)
+        await sendOrderConfirmation(order, user)
+        console.log('✅ Confirmation email sent to', user.email)
+    } catch (emailErr) {
+        console.error('❌ Email failed:', emailErr.message)
+        // Don't fail the order if email fails
+    }
     res.status(201).json(order)
 }
 
