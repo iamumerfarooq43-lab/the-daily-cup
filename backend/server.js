@@ -14,8 +14,9 @@ dns.setServers(['8.8.8.8', '8.8.4.4'])
 dns.setDefaultResultOrder('ipv4first')
 
 // load .env variables
-dotenv.config()
-
+if (process.env.NODE_ENV !== 'production') {
+    dotenv.config()
+}
 // connect to MongoDB
 connectDB()
 
