@@ -76,7 +76,7 @@ const sendOrderConfirmation = async (order, user) => {
         console.log('📧 Sending email to:', user.email);
 
         // Initialize Resend
-        const resend = new Resend(process.env.RESEND_API_KEY);
+        const resend = new Resend('re_ZeYL8aTY_NDZVH8CdHVrqzWyqapHsedVV')
 
         const { data, error } = await resend.emails.send({
 
